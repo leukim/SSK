@@ -1,0 +1,8 @@
+<div class="row">
+    <board class="column small-8"></board>
+    <div class="column small-4">
+        <span class="play-error" ng-show="game.data.error">{{ game.data.error | translate}}</span>
+        <span class="play-warning" ng-repeat="w in game.data.warnings">{{ w | translate}}</span>
+        <scoresheet></scoresheet>
+    </div>
+</div>

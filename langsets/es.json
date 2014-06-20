@@ -1,0 +1,127 @@
+{
+    "name": "Español",
+    "clean_rules": {},
+    "letterset": {
+        "A": {
+            "total": 12,
+            "value": 1,
+            "equivalents": ["À", "Á", "Ä", "Ã", "Ã", "Â"]
+        },
+        "B": {
+            "total": 2,
+            "value": 3
+        },
+        "C": {
+            "total": 4,
+            "value": 3
+        },
+        "CH": {
+            "total": 1,
+            "value": 5
+        },
+        "D": {
+            "total": 5,
+            "value": 2
+        },
+        "E": {
+            "total": 12,
+            "value": 1,
+            "equivalents": ["È", "É", "Ë", "Ẽ", "Ê"]
+        },
+        "F": {
+            "total": 1,
+            "value": 4
+        },
+        "G": {
+            "total": 2,
+            "value": 2
+        },
+        "H": {
+            "total": 2,
+            "value": 4
+        },
+        "I": {
+            "total": 6,
+            "value": 1,
+            "equivalents": ["Ì", "Í", "Ï", "Ĩ", "Î"]
+        },
+        "J": {
+            "total": 1,
+            "value": 8
+        },
+        "L": {
+            "total": 4,
+            "value": 1
+        },
+        "LL": {
+            "total": 1,
+            "value": 8
+        },
+        "M": {
+            "total": 2,
+            "value": 3
+        },
+        "N": {
+            "total": 5,
+            "value": 1
+        },
+        "Ñ": {
+            "total": 1,
+            "value": 8
+        },
+        "O": {
+            "total": 9,
+            "value": 1,
+            "equivalents": ["Ò", "Ó", "Ö", "Õ", "Ô"]
+        },
+        "P": {
+            "total": 2,
+            "value": 3
+        },
+        "Q": {
+            "total": 1,
+            "value": 5
+        },
+        "R": {
+            "total": 5,
+            "value": 1
+        },
+        "RR": {
+            "total": 8,
+            "value": 1
+        },
+        "S": {
+            "total": 6,
+            "value": 1
+        },
+        "T": {
+            "total": 4,
+            "value": 1
+        },
+        "U": {
+            "total": 5,
+            "value": 1,
+            "equivalents": ["Ù", "Ú", "Ü", "Ũ", "Û"]
+        },
+        "V": {
+            "total": 1,
+            "value": 4
+        },
+        "X": {
+            "total": 1,
+            "value": 8
+        },
+        "Y": {
+            "total": 1,
+            "value": 4
+        },
+        "Z": {
+            "total": 1,
+            "value": 10
+        },
+        "?": {
+            "total": 2,
+            "value": 0
+        }
+    }
+}

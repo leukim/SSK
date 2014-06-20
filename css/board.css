@@ -1,0 +1,128 @@
+.cell-A4, .cell-A12,
+.cell-C7, .cell-C9,
+.cell-D1, .cell-D8, .cell-D15,
+.cell-G3, .cell-G7, .cell-G9, .cell-G13,
+.cell-H4, .cell-H12,
+.cell-I3, .cell-I7, .cell-I9, .cell-I13,
+.cell-L1, .cell-L8, .cell-L15,
+.cell-M7, .cell-M9,
+.cell-O4, .cell-O12 { /* 2L */
+    background-color: lightblue !important;
+}
+
+.cell-B6, .cell-B10,
+.cell-F2, .cell-F6, .cell-F10, .cell-F14,
+.cell-J2, .cell-J6, .cell-J10, .cell-J14,
+.cell-N6, .cell-N10 { /* 3L */
+    background-color: blue !important;
+}
+
+.cell-B2, .cell-B14,
+.cell-C3, .cell-C13,
+.cell-D4, .cell-D12,
+.cell-E5, .cell-E11,
+.cell-K5, .cell-K11,
+.cell-L4, .cell-L12,
+.cell-M3, .cell-M13,
+.cell-N2, .cell-N14 { /* 2W */
+    background-color: lightpink !important;
+}
+
+.cell-A1, .cell-A8, .cell-A15,
+.cell-H1, .cell-H15,
+.cell-O1, .cell-O8, .cell-O15 { /* 3W */
+    background-color: red !important;
+}
+
+.cell-content {
+    background-color: #ff9;
+}
+
+.cell-last {
+    color: red;
+}
+
+.cell-H8 { /* center */
+    background-color: lightpink !important;
+}
+
+.board {
+    border-collapse: collapse;
+    font-weight: 700;
+    margin: 0 auto;
+}
+
+.board-cell {
+    width: 6%;
+    min-height: 40px;
+    min-width: 40px;
+    border: 1px solid #000000;
+    text-align: center;
+    float: left;
+    line-height: 150%;
+    background-color: rgb(0,200,0);
+    
+    position: relative;
+}
+
+.board-col {
+    float: left;
+}
+
+.board-selection-down {
+    border: 5px solid white;
+    border-bottom-color: rgb(0,0,0);
+    border-bottom-color: rgba(0,0,0,0);
+}
+
+.board-selection-right {
+    border: 5px solid white;
+    border-right-color: rgb(0,0,0);
+    border-right-color: rgba(0,0,0,0);
+}
+
+.cell- {
+    display: none;
+}
+
+.cell-played {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    margin-left: -12px;
+    margin-top: 6px;
+}
+
+.play-error {
+    border: 1px solid red;
+}
+
+.play-warning {
+    border: 1px solid orange;
+}
+
+.zero-tiles {
+    background: rgb(255,0,0);
+    background: rgba(255,0,0,0.5);
+}
+
+.board-selection-down .cell-played, .board-selection-right .cell-played {
+    margin-top: 2px;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.game-list td {
+    text-align: center;
+}
