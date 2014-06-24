@@ -1,0 +1,19 @@
+<div class="row">
+    <h1>{{ 'GAMES' | translate }}</h1>
+    <table class="game-list">
+        <tr>
+            <th>{{ 'GAME' | translate }}</th>
+            <th>{{ 'PLAYERS' | translate }}</th>
+            <th>{{ 'NAMES' | translate }}</th>
+            <th>{{ 'LANGUAGE' | translate }}</th>
+            <th>{{ 'OPTIONS' | translate }}</th>
+        </tr>
+        <tr ng-repeat="(id,game) in getGames()">
+            <td><a href="#/games/{{id}}">{{ game.misc.name }}</a></td>
+            <td>{{ game.misc.numplayers }}</td>
+            <td>{{ game.misc.players.join(', ') }}</td>
+            <td>{{ game.misc.language }}</td>
+            <td><a class="button alert" ng-click="deleteGame(id)">{{ 'DELETE' | translate }}</a></td>
+        </tr>
+    </table>
+</div>
