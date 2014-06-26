@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="column small-8">
+        <h2>{{ 'REGISTER' | translate }}</h2>
+        <form ng-hide="registering">
+            {{ 'USERNAME' | translate }}:
+            <input type="text" placeholder="{{ 'USERNAME' | translate }}" ng-model="newuser.username" />
+            {{ 'PASSWORD' | translate }}:
+            <input type="password" placeholder="{{ 'PASSWORD' | translate }}" ng-model="newuser.password" />
+            <button ng-click="doRegister(newuser)">{{ 'REGISTER' | translate }}</button>
+        </form>
+        <div ng-show="registering">
+            Logging in...
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="column small-4">
+        {{ 'SELECT_LANGUAGE' | translate}}:
+        <select ng-model="newgame.language" ng-init="newgame.language = $translate.use()" ng-options="lang.code as lang.name for lang in available_langs">
+            <!--option ng-repeat="lang in available_langs" value="{{lang.code}}">{{lang.name}}</option-->
+        </select>
+        
+        {{ 'SELECT_NUM_PLAYERS' | translate}}
+        <select ng-model="newgame.numplayers">
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <div ng-repeat="i in playersRange()">
+            {{ 'PLAYER' | translate}} {{i}}:
+            <input ng-model="newgame.playernames[i-1]" type="text" />
+        </div>
+        {{ 'NAME' | translate }}:
+        <input type="text" ng-model="newgame.name"/>
+        <a class="button" href="#/game" ng-click="startGame()">{{ 'START_GAME' | translate}}</a>
+    </div>
+</div>
