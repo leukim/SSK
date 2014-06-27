@@ -1,6 +1,6 @@
 var controllers = angular.module('SSKControllers', []);
 
-controllers.controller("MainCtrl", function($scope, $translate, gameFactory, AuthService, Session) {
+controllers.controller("MainCtrl", function($scope, $translate, $location, gameFactory, AuthService, Session) {
     $scope.$translate = $translate;
     $scope.Session = Session;
     
@@ -21,6 +21,7 @@ controllers.controller("MainCtrl", function($scope, $translate, gameFactory, Aut
     $scope.doLogout = function () {
         AuthService.logout().then(function (res) {
             Session.destroy();
+            $location.path("/");
         });
     };
 });
@@ -29,6 +30,8 @@ controllers.controller("RegisterCtrl", function($scope, AuthService, Session, $l
     $scope.registering = false;
     
     $scope.doRegister = function (newuser) {
+        $scope.register_error = false;
+        
         $scope.newuser = {
             username: '',
             password: ''
@@ -42,8 +45,7 @@ controllers.controller("RegisterCtrl", function($scope, AuthService, Session, $l
             $scope.registering = false;
         }, function (err) {
             $scope.registering = false;
-            //console.log(err);
-            // TODO Show flash
+            $scope.register_error = true;
         });
     };
 });
@@ -52,6 +54,9 @@ controllers.controller("HomeCtrl", function($scope, AuthService, Session) {
     $scope.logging = false;
     
     $scope.doLogin = function (credentials) {
+        $scope.login_error = false;
+        $('#logging_in_modal').foundation('reveal', 'open');
+        
         $scope.credentials = {
             username: '',
             password: ''
@@ -61,18 +66,39 @@ controllers.controller("HomeCtrl", function($scope, AuthService, Session) {
         AuthService.login(credentials).then(function (res) {
             Session.create(res.data.username);
             $scope.logging = false;
+            $('#logging_in_modal').foundation('reveal', 'close');
         }, function (err) {
-            //console.log(err);
-            // TODO Show flash
+            $scope.login_error = true;
             $scope.logging = false;
+            $('#logging_in_modal').foundation('reveal', 'close');
         });
     };
 });
 
 controllers.controller("GameListCtrl", function($scope, gameFactory) {
-    $scope.getGames = gameFactory.getAllGames;
+    $scope.getGames = function () {
+        gameFactory.getAllGames().then(function (res) {
+            $scope.games_loaded = true;
+            console.log(res);
+            $scope.games = res.data;
+            for (var i in $scope.games) {
+                $scope.games[i].data= JSON.parse($scope.games[i].data);
+            }
+            $('#game_deleting_modal').foundation('reveal', 'close');
+        }, function (err) {
+            console.log(err);
+            $('#game_deleting_modal').foundation('reveal', 'close');
+        });
+    };
+    $scope.getGames();
     
-    $scope.deleteGame = gameFactory.deleteGame;
+    
+    $scope.deleteGame = function (id) {
+        $('#game_deleting_modal').foundation('reveal', 'open');
+        gameFactory.deleteGame(id).then(function (res) {
+            $scope.getGames();
+        });
+    };
 });
 
 controllers.controller("NewGameCtrl", function ($scope, $translate, $location, gameFactory) {
@@ -101,31 +127,48 @@ controllers.controller("NewGameCtrl", function ($scope, $translate, $location, g
     
     $scope.startGame = function () {
         gameFactory.loadLangset($scope.newgame.language).success(function (langset) {
-            
-            $scope.game = new Game(langset, $scope.getPlayersNames());
-            var id = gameFactory.startGame({
+            var game = new Game(langset, $scope.getPlayersNames());
+            gameFactory.startGame({
                 misc: {
                     name: $scope.newgame.name,
                     numplayers: $scope.newgame.numplayers,
                     language: langset.name,
                     players: $scope.getPlayersNames()
                 },
-                game_data: $scope.game.data,
-                board_data: $scope.game.data.board.data
+                game_data: game.data,
+                board_data: game.data.board.data
+            }).then(function (res) {
+                $location.path("/games/"+res.data._id);
+            }, function (err) {
+                // TODO Show error
+                console.log(err);
             });
-            
-            console.log(id);
-            
-            $location.path("/games/"+id);
         });
     };
 });
 
 controllers.controller("GameCtrl", function ($scope, $routeParams, gameFactory) {
     
-    var state = gameFactory.getGame($routeParams.id);
+    $scope.state = undefined;
+    $scope.saved = true;
     
-    $scope.game = new Game(undefined, undefined, state);
+    gameFactory.getGame($routeParams.id).then(function (res) {
+        $scope.state = JSON.parse(res.data.data);
+        $scope.game = new Game(undefined, undefined, $scope.state);
+    }, function (err) {
+        // TODO Show error
+        console.log(err);
+    });
+    
+    $scope.save = function () {
+        $('#game_saving_modal').foundation('reveal', 'open');
+        gameFactory.updateGame($routeParams.id, $scope.state).then(function (res) {
+            $scope.saved = true;
+            $('#game_saving_modal').foundation('reveal', 'close');
+        }, function (err) {
+            console.log(err);
+        });
+    };
     
     $scope.showRevealTiles = function () {
         $('#letterset').foundation('reveal', 'open');

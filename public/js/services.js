@@ -3,10 +3,6 @@ var services = angular.module("SSKServices", []);
 services.factory("gameFactory", function ($http, $localStorage) {
     var API = {};
     
-    //delete $localStorage.games;
-    
-    if(!$localStorage.games) $localStorage.games = [];
-    
     API.loadLangset = function(code) {
         return $http({
             method: "GET",
@@ -15,21 +11,23 @@ services.factory("gameFactory", function ($http, $localStorage) {
     };
     
     API.startGame = function (state) {
-        var id = $localStorage.games.push(state) - 1;
-        return id;
+        return $http.post('api/newgame', state);
     };
     
     API.getAllGames = function () {
-        return $localStorage.games;
+        return $http.get('api/mygames');
     };
     
     API.getGame = function (id) {
-        return $localStorage.games[id];
+        return $http.get('api/game/'+id);
+    };
+    
+    API.updateGame = function (id, state) {
+        return $http.put('api/game/'+id, state);
     };
     
     API.deleteGame = function (id) {
-        delete $localStorage.games[id];
-        $localStorage.games = $localStorage.games.filter(function(n){ return n !== undefined });
+        return $http.delete('api/game/'+id);
     };
     
     return API;

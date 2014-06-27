@@ -1,19 +1,27 @@
 <div class="row">
-    <h1>{{ 'GAMES' | translate }}</h1>
-    <table class="game-list">
-        <tr>
-            <th>{{ 'GAME' | translate }}</th>
-            <th>{{ 'PLAYERS' | translate }}</th>
-            <th>{{ 'NAMES' | translate }}</th>
-            <th>{{ 'LANGUAGE' | translate }}</th>
-            <th>{{ 'OPTIONS' | translate }}</th>
-        </tr>
-        <tr ng-repeat="(id,game) in getGames()">
-            <td><a href="#/games/{{id}}">{{ game.misc.name }}</a></td>
-            <td>{{ game.misc.numplayers }}</td>
-            <td>{{ game.misc.players.join(', ') }}</td>
-            <td>{{ game.misc.language }}</td>
-            <td><a class="button alert" ng-click="deleteGame(id)">{{ 'DELETE' | translate }}</a></td>
-        </tr>
-    </table>
+    <div ng-show="games_loaded" class="column small-8">
+        <h1>{{ 'GAMES' | translate }}</h1>
+        <table class="game-list">
+            <tr>
+                <th>{{ 'GAME' | translate }}</th>
+                <th>{{ 'PLAYERS' | translate }}</th>
+                <th>{{ 'NAMES' | translate }}</th>
+                <th>{{ 'LANGUAGE' | translate }}</th>
+                <th>{{ 'OPTIONS' | translate }}</th>
+            </tr>
+            <tr ng-repeat="game in games">
+                <td><a href="#/games/{{game._id}}">{{ game.data.misc.name }}</a></td>
+                <td>{{ game.data.misc.numplayers }}</td>
+                <td>{{ game.data.misc.players.join(', ') }}</td>
+                <td>{{ game.data.misc.language }}</td>
+                <td><a class="button alert" ng-click="deleteGame(game._id)">{{ 'DELETE' | translate }}</a></td>
+            </tr>
+        </table>
+    </div>
+    <div ng-hide="games_loaded" class="column small-8">
+        {{ 'LOADING_GAMES' | translate }}...
+    </div>
+</div>
+<div id="game_deleting_modal" class="reveal-modal" data-reveal>
+  <h2>{{ 'DELETING' | translate }}</h2>
 </div>

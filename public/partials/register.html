@@ -1,6 +1,10 @@
 <div class="row">
     <div class="column small-8">
         <h2>{{ 'REGISTER' | translate }}</h2>
+        <div ng-show="register_error" data-alert class="alert-box alert">
+            {{ 'ERR_BAD_REGISTER' | translate }}
+            <a href="#" class="close">&times;</a>
+        </div>
         <form ng-hide="registering">
             {{ 'USERNAME' | translate }}:
             <input type="text" placeholder="{{ 'USERNAME' | translate }}" ng-model="newuser.username" />
@@ -9,7 +13,7 @@
             <button ng-click="doRegister(newuser)">{{ 'REGISTER' | translate }}</button>
         </form>
         <div ng-show="registering">
-            Logging in...
+            {{ 'REGISTERING ' | translate }}...
         </div>
     </div>
 </div>

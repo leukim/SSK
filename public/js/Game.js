@@ -57,7 +57,7 @@ function Game (language, playerNames, backup_data) {
                 
                 return;
             }
-            console.log(data.playerNames);
+            
             newplay.playerName = data.playerNames[data.currentTurn];
             
             data.plays.push(newplay);

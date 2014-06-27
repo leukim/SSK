@@ -2,6 +2,8 @@
     <a ng-click="showRevealTiles()" class="button">{{ 'TILES' | translate }}</a>
     <a class="button alert" ng-hide="game.data.board.data.end" ng-click="game.data.board.endGame()">{{ 'END_GAME' | translate }}</a>
     <a class="button success" ng-show="game.data.board.data.end" ng-click="game.data.board.undoEndGame()">{{ 'REOPEN_GAME' | translate }}</a>
+    <a class="button" ng-hide="saved" ng-click="save()">{{ 'SAVE' | translate }}</a>
+    <a class="button secondary disabled" ng-show="saved">{{ 'SAVED' | translate }}</a>
 </div>
 <div class="row points-row">
     <div class="column small-3 points-item" style="text-align: center;" ng-repeat="(id,player) in game.data.score">

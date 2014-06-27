@@ -8,6 +8,36 @@
     <script src="js/vendor/modernizr.js"></script>
 
       <link rel="stylesheet" href="css/board.css"/>
+      
+      <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/foundation/foundation.reveal.js"></script>
+        <script>
+          $(document).foundation();
+        </script>
+        <script src="js/vendor/angular.min.js"></script>
+        <script src="js/vendor/angular-route.min.js"></script>
+        <script src="js/vendor/angular-storage.js"></script>
+        <script src="js/vendor/angular-translate.js"></script>
+        <script src="js/vendor/angular-translate-loader-static-files.js"></script>
+        <script src="js/vendor/angular-storage.js"></script>
+        
+        <script src="js/Cell.js"></script>
+        <script src="js/Board.js"></script>
+        <script src="js/Game.js"></script>
+        
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/directives.js"></script>
+        
+        <script src="js/App.js"></script>
+    
+        <script type="text/javascript">
+            $(window).resize(function () {
+                $(".board-cell").height($(".cell-A0").width());
+            });
+            $(window).resize();
+        </script>
   </head>
   <body>
     <div ng-app="SSK" ng-controller="MainCtrl">
@@ -39,35 +69,5 @@
         <br />
         <div ng-view></div>
     </div>
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script src="js/foundation/foundation.reveal.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-    <script src="js/vendor/angular.min.js"></script>
-    <script src="js/vendor/angular-route.min.js"></script>
-    <script src="js/vendor/angular-storage.js"></script>
-    <script src="js/vendor/angular-translate.js"></script>
-    <script src="js/vendor/angular-translate-loader-static-files.js"></script>
-    <script src="js/vendor/angular-storage.js"></script>
-    
-    <script src="js/Cell.js"></script>
-    <script src="js/Board.js"></script>
-    <script src="js/Game.js"></script>
-    
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/directives.js"></script>
-    
-    <script src="js/App.js"></script>
-
-    <script type="text/javascript">
-        $(window).resize(function () {
-            $(".board-cell").height($(".cell-A0").width());
-        });
-        $(window).resize();
-    </script>
   </body>
 </html>

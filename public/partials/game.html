@@ -1,8 +1,16 @@
-<div class="row">
+<div ng-show="game" class="row">
     <board class="column small-8"></board>
     <div class="column small-4">
         <span class="play-error" ng-show="game.data.error">{{ game.data.error | translate}}</span>
         <span class="play-warning" ng-repeat="w in game.data.warnings">{{ w | translate}}</span>
         <scoresheet></scoresheet>
     </div>
+</div>
+<div ng-hide="game" class="row">
+    <div class="column small-8">
+        {{ 'LOADING_GAME' | translate }}...
+    </div>
+</div>
+<div id="game_saving_modal" class="reveal-modal" data-reveal>
+  <h2>{{ 'SAVING' | translate }}</h2>
 </div>

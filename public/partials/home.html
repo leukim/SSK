@@ -1,15 +1,19 @@
 <div class="row">
-    <div ng-hide="Session.isLoggedIn()" class="column small-8">
+    <div ng-hide="Session.isLoggedIn() || logging" class="column small-8">
         <h2>{{ 'LOGIN' | translate }}</h2>
-        <form ng-hide="logging">
+        <div ng-show="login_error" data-alert class="alert-box alert">
+            {{ 'ERR_BAD_LOGIN' | translate }}
+            <a href="#" class="close">&times;</a>
+        </div>
+        <form>
             {{ 'USERNAME' | translate }}:
             <input type="text" placeholder="{{ 'USERNAME' | translate }}" ng-model="credentials.username" />
             {{ 'PASSWORD' | translate }}:
             <input type="password" placeholder="{{ 'PASSWORD' | translate }}" ng-model="credentials.password" />
             <button ng-click="doLogin(credentials)">{{ 'LOGIN' | translate}}</button>
         </form>
-        <div ng-show="logging">
-            Logging in...
-        </div>
     </div>
+</div>
+<div id="logging_in_modal" class="reveal-modal" data-reveal>
+  {{ 'LOGGING_IN' | translate }}...
 </div>
