@@ -3,18 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation | Welcome</title>
+    <title>SSK | Scrabble Score Keeper</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
 
-      <link rel="stylesheet" href="css/board.css"/>
+      <link rel="stylesheet" href="css/ssk.css"/>
+      
+      <link rel="stylesheet" href="css/flags.css"/>
+      <link rel="stylesheet" href="css/font-awesome.min.css">
       
       <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script src="js/foundation/foundation.reveal.js"></script>
-        <script>
-          $(document).foundation();
-        </script>
+        <script src="js/foundation/foundation.dropdown.js"></script>
+        
         <script src="js/vendor/angular.min.js"></script>
         <script src="js/vendor/angular-route.min.js"></script>
         <script src="js/vendor/angular-storage.js"></script>
@@ -51,16 +53,21 @@
             <section class="top-bar-section">
                 <ul class="left">
                     <li ng-hide="Session.isLoggedIn()"><a href="#/register">{{ 'REGISTER' | translate }}</a></li>
-                    <li ng-show="Session.isLoggedIn()"><a href="#/games">{{ 'GAMES' | translate }}</a></li>
-                    <li ng-show="Session.isLoggedIn()"><a href="#/new">{{ 'NEW_GAME' | translate }}</a></li>
+                    <li ng-show="Session.isLoggedIn()"><a href="#/games"><i class="fa fa-list"></i> {{ 'GAMES' | translate }}</a></li>
+                    <li ng-show="Session.isLoggedIn()"><a href="#/new"><i class="fa fa-plus"></i> {{ 'NEW_GAME' | translate }}</a></li>
                 </ul>
                 <ul class="right">
-                    <li ng-show="Session.isLoggedIn()"><a ng-click="doLogout()">{{ Session.username }} ({{ 'LOGOUT' | translate }})</a></li>
+                    <li ng-show="Session.isLoggedIn()"><a ng-click="doLogout()">{{ Session.username }} <i class="fa fa-sign-out"></i></a></li>
                     <li ng-hide="Session.isLoggedIn()"><a href="#/">{{ 'LOGIN' | translate }}</a></li>
                     <li class="has-dropdown">
-                        <a>{{ 'SELECT_LANGUAGE' | translate }}</a>
+                        <a><img class="flag flag-{{language.flag}}" alt="" /> {{ language.name }}</a>
                         <ul class="dropdown">
-                            <li ng-repeat="lang in available_langs"><a ng-click="$translate.use(lang.code)">{{ lang.name }}</a></li>
+                            <li ng-repeat="lang in available_langs">
+                                <a ng-click="changeLanguage(lang.code)">
+                                    <img class="flag flag-{{lang.flag}}" alt="" />
+                                    {{ lang.name }}
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -69,5 +76,8 @@
         <br />
         <div ng-view></div>
     </div>
+    <script>
+      $(document).foundation();
+    </script>
   </body>
 </html>

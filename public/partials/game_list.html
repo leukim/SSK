@@ -1,7 +1,7 @@
 <div class="row">
-    <div ng-show="games_loaded" class="column small-8">
+    <div ng-show="games_loaded" class="column small-12">
         <h1>{{ 'GAMES' | translate }}</h1>
-        <table class="game-list">
+        <table class="game-list wide">
             <tr>
                 <th>{{ 'GAME' | translate }}</th>
                 <th>{{ 'PLAYERS' | translate }}</th>
@@ -13,15 +13,15 @@
                 <td><a href="#/games/{{game._id}}">{{ game.data.misc.name }}</a></td>
                 <td>{{ game.data.misc.numplayers }}</td>
                 <td>{{ game.data.misc.players.join(', ') }}</td>
-                <td>{{ game.data.misc.language }}</td>
-                <td><a class="button alert" ng-click="deleteGame(game._id)">{{ 'DELETE' | translate }}</a></td>
+                <td><img class="flag flag-{{game.data.misc.flag}}" alt="" /> {{ game.data.misc.language }}</td>
+                <td><a class="button alert in-table" ng-click="deleteGame(game._id)"><i class="fa fa-times"></i>&nbsp;{{ 'DELETE' | translate }}</a></td>
             </tr>
         </table>
     </div>
-    <div ng-hide="games_loaded" class="column small-8">
-        {{ 'LOADING_GAMES' | translate }}...
+    <div ng-hide="games_loaded" class="center-text panel radius">
+        <h1><i class="fa fa-spin fa-spinner"></i> {{ 'LOADING_GAMES' | translate }}</h1>
     </div>
 </div>
-<div id="game_deleting_modal" class="reveal-modal" data-reveal>
-  <h2>{{ 'DELETING' | translate }}</h2>
+<div id="game_deleting_modal" class="reveal-modal panel radius" data-reveal>
+  <h1><i class="fa fa-spin fa-spinner"></i> {{ 'DELETING' | translate }}</h1>
 </div>

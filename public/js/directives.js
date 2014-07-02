@@ -18,11 +18,11 @@ directives.directive("board", function () {
     };
 });
 
-directives.directive("scoresheet", function () {
+/*directives.directive("scoresheet", function () {
     return {
         restrict: 'E',
         templateUrl: 'templates/scoresheet.html',
         link: function (scope, elem, attrs) {
         }
     };
-});
+});*/

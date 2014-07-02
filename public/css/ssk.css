@@ -93,17 +93,14 @@
     margin-top: 6px;
 }
 
-.play-error {
-    border: 1px solid red;
-}
-
-.play-warning {
-    border: 1px solid orange;
-}
-
 .zero-tiles {
     background: rgb(255,0,0);
     background: rgba(255,0,0,0.5);
+}
+
+.left-tiles {
+    background: rgb(0,255,0);
+    background: rgba(0,255,0,0.5);
 }
 
 .board-selection-down .cell-played, .board-selection-right .cell-played {
@@ -125,4 +122,24 @@
 
 .game-list td {
     text-align: center;
+}
+
+.wide {
+    width: 100%;
+}
+
+.half-wide {
+    width: 49%;
+}
+
+.in-table {
+    margin-bottom: 0;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.fa-green {
+    color: green;
 }

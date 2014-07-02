@@ -1,19 +1,21 @@
 var controllers = angular.module('SSKControllers', []);
 
-controllers.controller("MainCtrl", function($scope, $translate, $location, gameFactory, AuthService, Session) {
-    $scope.$translate = $translate;
+controllers.controller("MainCtrl", function($scope, Language, $location, gameFactory, AuthService, Session) {
+    //$scope.$translate = $translate;
     $scope.Session = Session;
     
-    $scope.available_langs = [
-        {name:"Català", code:"ca"},
-        {name:"Deutsch", code:"de"},
-        {name:"Español", code:"es"},
-        {name:"English", code:"en"},
-        {name:"Français", code:"fr"},
-    ];
+    $scope.available_langs = Language.available_langs;
     
-    AuthService.ping().then(function (res) {
-        Session.create(res.data.username);
+    $scope.language = Language.language;
+    
+    $scope.changeLanguage = function (code) {
+        Language.changeLanguage(code);
+        if (Session.isLoggedIn()) Session.setLanguage(code);
+    };
+    
+    AuthService.profile().then(function (res) {
+        console.log(res);
+        Session.create(res.data);
     }, function (err) {
         console.log(err);
     });
@@ -40,7 +42,7 @@ controllers.controller("RegisterCtrl", function($scope, AuthService, Session, $l
         
         AuthService.register(newuser).then(function (res) {
             console.log(res);
-            Session.create(res.data.username);
+            Session.create(res.data);
             $location.path("/");
             $scope.registering = false;
         }, function (err) {
@@ -133,6 +135,7 @@ controllers.controller("NewGameCtrl", function ($scope, $translate, $location, g
                     name: $scope.newgame.name,
                     numplayers: $scope.newgame.numplayers,
                     language: langset.name,
+                    flag: langset.flag,
                     players: $scope.getPlayersNames()
                 },
                 game_data: game.data,
@@ -176,5 +179,13 @@ controllers.controller("GameCtrl", function ($scope, $routeParams, gameFactory) 
     
     $scope.hideRevealTiles = function () {
         $('#letterset').foundation('reveal', 'close');
+    };
+    
+    $scope.showRevealPlays = function () {
+        $('#plays').foundation('reveal', 'open');
+    };
+    
+    $scope.hideRevealPlays = function () {
+        $('#plays').foundation('reveal', 'close');
     };
 });

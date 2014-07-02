@@ -1,5 +1,6 @@
 {
     "name": "Català",
+    "flag": "catalonia",
     "clean_rules": {
         "L.L": "L·L",
         "L-L": "L·L",

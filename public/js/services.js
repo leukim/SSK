@@ -1,6 +1,6 @@
 var services = angular.module("SSKServices", []);
 
-services.factory("gameFactory", function ($http, $localStorage) {
+services.factory("gameFactory", function ($http) {
     var API = {};
     
     API.loadLangset = function(code) {
@@ -33,6 +33,31 @@ services.factory("gameFactory", function ($http, $localStorage) {
     return API;
 });
 
+services.service('Language', function ($translate) {
+    this.available_langs = {
+        'ca': {name:"Català", code:"ca", flag:"catalonia"},
+        'de': {name:"Deutsch", code:"de", flag:"de"},
+        'es': {name:"Español", code:"es", flag:"es"},
+        'en': {name:"English", code:"en", flag:"gb"},
+        'fr': {name:"Français", code:"fr", flag:"fr"},
+    };
+    
+    this.language = {
+        name: this.available_langs['ca'].name,
+        code: this.available_langs['ca'].code,
+        flag: this.available_langs['ca'].flag
+    };
+    
+    this.changeLanguage = function (code) {
+        $translate.use(code);
+        this.language.name = this.available_langs[code].name;
+        this.language.code = this.available_langs[code].code;
+        this.language.flag = this.available_langs[code].flag;
+    };
+    
+    return this;
+});
+
 services.factory('AuthService', function ($http) {
     return {
         register: function (newuser) {
@@ -49,21 +74,39 @@ services.factory('AuthService', function ($http) {
         
         ping: function() {
             return $http.get('api/ping');
+        },
+        
+        profile: function () {
+            return $http.get('api/profile');
+        },
+        
+        setLanguage: function (code) {
+            return $http.post('api/profile', {
+                language: code
+            })
         }
     };
 });
 
-services.service('Session', function () {
-    this.create = function (username) {
-        this.username = username;
+services.service('Session', function (Language, AuthService) {
+    this.create = function (data) {
+        this.username = data.username;
+        this.setLanguage(data.language);
     };
     
     this.destroy = function () {
         this.username = null;
+        this.language = null;
     };
     
     this.isLoggedIn = function () {
         return !!this.username;
+    };
+    
+    this.setLanguage = function (code) {
+        Language.changeLanguage(code);
+        AuthService.setLanguage(code);
+        this.language = code;
     };
     
     return this;

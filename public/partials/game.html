@@ -1,16 +1,80 @@
 <div ng-show="game" class="row">
-    <board class="column small-8"></board>
-    <div class="column small-4">
-        <span class="play-error" ng-show="game.data.error">{{ game.data.error | translate}}</span>
-        <span class="play-warning" ng-repeat="w in game.data.warnings">{{ w | translate}}</span>
-        <scoresheet></scoresheet>
+    <div class="column small-12 large-4">
+        <div ng-hide="game.data.board.data.end">
+            <h2>{{ 'NEW_WORD' | translate}}</h2>
+            <input type="text" ng-model="game.data.new_word" />
+            <button class="button success half-wide" ng-click="game.addWord();saved=false;"><i class="fa fa-plus"></i>&nbsp;{{ 'ADD' | translate }}</button>
+            <button class="button alert half-wide" ng-click="game.goBack();saved=false;" ng-disabled="game.data.plays.length === 0"><i class="fa fa-undo"></i>&nbsp;{{ 'UNDO' | translate  }}</button>
+        </div>
+        
+        <h2>{{ 'GAME_STATE' | translate }}</h2>
+        
+        <div class="alert-box alert" ng-show="game.data.error">{{ game.data.error | translate}}</div>
+        <div class="alert-box warning" ng-repeat="w in game.data.warnings">{{ w | translate}}</div>
+        
+        <a ng-click="showRevealTiles()" class="button half-wide"><i class="fa fa-file-text"></i>&nbsp;{{ 'TILES' | translate }}</a>
+        
+        <a ng-click="showRevealPlays()" class="button half-wide"><i class="fa fa-file-text"></i> {{ 'PLAYS' | translate }}</a>
+        
+        <h2>{{ 'SCORE' | translate }}</h2>
+        
+        <table class="table" style="width: 100%;">
+            <tr class="points-item" style="text-align: center;" ng-repeat="(id,player) in game.data.score">
+                <td>
+                    <b ng-class="{'text-red': id==game.data.currentTurn}">{{ player.name }}</b>
+                </td>
+                <td style="text-align: center;">
+                    {{ player.points }}
+                </td>
+            </tr>
+        </table>
+        
+        <h2>{{ 'OPTIONS' | translate }}</h2>
+        
+        <a class="button half-wide" ng-hide="saved" ng-click="save()"><i class="fa fa-save"></i>&nbsp;{{ 'SAVE' | translate }}</a>
+        <a class="button secondary disabled half-wide" ng-show="saved"><i class="fa fa-save"></i>&nbsp;{{ 'SAVED' | translate }}</a>
+        
+        <a class="button alert half-wide" ng-hide="game.data.board.data.end" ng-click="game.data.board.endGame()"><i class="fa fa-lock"></i>&nbsp;{{ 'END_GAME' | translate }}</a>
+        <a class="button success half-wide" ng-show="game.data.board.data.end" ng-click="game.data.board.undoEndGame()"><i class="fa fa-unlock"></i>&nbsp;{{ 'REOPEN_GAME' | translate }}</a>
+        
+        <div id="letterset" class="reveal-modal" data-reveal>
+            <a ng-click="hideRevealTiles()" class="close-reveal-modal"><i class="fa fa-times"></i></a><br />
+            <table class="wide">
+                <tr>
+                    <th ng-repeat="(letter, tile) in game.data.board.data.letterset">{{ letter }}</th>
+                </tr>
+                <tr>
+                    <td ng-repeat="(letter, tile) in game.data.board.data.letterset" ng-class="{'zero-tiles': tile.total < 0, 'left-tiles': tile.total > 0}">{{ tile.total }}</td>
+                </tr>
+            </table>
+        </div>
+        <div id="plays" class="reveal-modal" data-reveal>
+            <a ng-click="hideRevealPlays()" class="close-reveal-modal"><i class="fa fa-times"></i></a>
+            <h3>{{ 'PLAYS' | translate }}</h3>
+            <table class="wide">
+                <tr>
+                    <th>{{ 'PLAYER' | translate }}</th>
+                    <th>{{ 'WORDS' | translate }}</th>
+                    <th>{{ 'POSITION' | translate }}</th>
+                    <th>{{ 'SCRABBLE' | translate }}</th>
+                    <th>{{ 'POINTS' | translate }}</th>
+                </tr>
+                <tr ng-repeat="play in game.data.plays">
+                    <td>{{ play.playerName }}</td>
+                    <td>{{ play.wordlist }}</td>
+                    <td>{{ play.position }}</td>
+                    <td><i ng-show="play.scrabble" class="fa fa-check fa-green"></i></td>
+                    <td>{{ play.points }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
+    
+    <board class="column small-11 large-8"></board>
 </div>
-<div ng-hide="game" class="row">
-    <div class="column small-8">
-        {{ 'LOADING_GAME' | translate }}...
-    </div>
+<div ng-hide="game" class="center-text panel radius">
+    <h1><i class="fa fa-spin fa-spinner"></i> {{ 'LOADING_GAME' | translate }}</h1>
 </div>
-<div id="game_saving_modal" class="reveal-modal" data-reveal>
-  <h2>{{ 'SAVING' | translate }}</h2>
+<div id="game_saving_modal" class="reveal-modal center-text panel radius" data-reveal>
+  <h1><i class="fa fa-spin fa-spinner"></i> {{ 'SAVING' | translate }}</h1>
 </div>

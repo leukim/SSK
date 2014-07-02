@@ -1,5 +1,6 @@
 {
     "name": "Deutsch",
+    "flag": "de",
     "clean_rules": {},
     "letterset": {
         "A": {

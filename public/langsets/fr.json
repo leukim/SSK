@@ -1,5 +1,6 @@
 {
     "name": "Français",
+    "flag": "fr",
     "clean_rules": {
         "Œ": "OE"
 	},

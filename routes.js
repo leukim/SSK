@@ -45,6 +45,23 @@ module.exports = function (app) {
           username: req.user.username
       });
   });
+    
+    app.get('/api/profile', isLoggedIn, function (req, res) {
+        res.json({
+            username: req.user.username,
+            language: req.user.language
+        });
+    });
+    
+    app.post('/api/profile', isLoggedIn, function (req, res) {
+        req.user.language = req.body.language;
+        
+        req.user.save(function (err) {
+            if (err) res.send(err, 500);
+            
+            res.send("OK", 200);
+        });
+    });
   
     app.post('/api/newgame', isLoggedIn, function (req, res) {
         var game = new Game();
