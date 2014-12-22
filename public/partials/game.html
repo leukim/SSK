@@ -1,22 +1,18 @@
-<div ng-show="game" class="row">
+<div id="game-screen" ng-show="game" class="row">
     <div class="column small-12 large-4">
-        <div ng-hide="game.data.board.data.end">
-            <h2>{{ 'NEW_WORD' | translate}}</h2>
-            <input type="text" ng-model="game.data.new_word" />
-            <button class="button success half-wide" ng-click="game.addWord();saved=false;"><i class="fa fa-plus"></i>&nbsp;{{ 'ADD' | translate }}</button>
-            <button class="button alert half-wide" ng-click="game.goBack();saved=false;" ng-disabled="game.data.plays.length === 0"><i class="fa fa-undo"></i>&nbsp;{{ 'UNDO' | translate  }}</button>
-        </div>
-        
-        <h2>{{ 'GAME_STATE' | translate }}</h2>
+        <a class="button wide" ng-hide="saved" ng-click="save()"><i class="fa fa-save"></i>&nbsp;{{ 'SAVE' | translate }}</a>
+        <a class="button secondary disabled wide" ng-show="saved"><i class="fa fa-save"></i>&nbsp;{{ 'SAVED' | translate }}</a>
         
         <div class="alert-box alert" ng-show="game.data.error">{{ game.data.error | translate}}</div>
         <div class="alert-box warning" ng-repeat="w in game.data.warnings">{{ w | translate}}</div>
         
-        <a ng-click="showRevealTiles()" class="button half-wide"><i class="fa fa-file-text"></i>&nbsp;{{ 'TILES' | translate }}</a>
-        
-        <a ng-click="showRevealPlays()" class="button half-wide"><i class="fa fa-file-text"></i> {{ 'PLAYS' | translate }}</a>
-        
-        <h2>{{ 'SCORE' | translate }}</h2>
+        <a data-dropdown="options" class="button dropdown wide">{{ 'OPTIONS' | translate }}</a><br>
+        <ul id="options" data-dropdown-content class="f-dropdown">
+            <li><a ng-click="showRevealTiles()"><i class="fa fa-file-text"></i>&nbsp;{{ 'TILES' | translate }}</a></li>
+            <li><a ng-click="showRevealPlays()"><i class="fa fa-file-text"></i> {{ 'PLAYS' | translate }}</a></li>
+            <li ng-hide="game.data.board.data.end"><a ng-click="game.data.board.endGame()"><i class="fa fa-lock"></i>&nbsp;{{ 'END_GAME' | translate }}</a></li>
+            <li ng-show="game.data.board.data.end"><a ng-click="game.data.board.undoEndGame()"><i class="fa fa-unlock"></i>&nbsp;{{ 'REOPEN_GAME' | translate }}</a></li>
+        </ul>
         
         <table class="table" style="width: 100%;">
             <tr class="points-item" style="text-align: center;" ng-repeat="(id,player) in game.data.score">
@@ -29,14 +25,17 @@
             </tr>
         </table>
         
-        <h2>{{ 'OPTIONS' | translate }}</h2>
+        <div ng-hide="game.data.board.data.end" class="panel">
+            <h2>{{ 'NEW_WORD' | translate}}</h2>
+            <input type="text" ng-model="game.data.new_word" />
+            <a class="button split success wide" data-options="is_hover:true"><div style="display: inline;" ng-click="game.addWord()"><i class="fa fa-plus"></i>&nbsp;{{ 'ADD' | translate }}</div><span data-dropdown="drop"></span></a><br>
+            <ul id="drop" class="f-dropdown" data-dropdown-content>
+              <li><a class="button" ng-click="game.pass()">{{ 'PASS' | translate }}</a></li>
+              <li><a class="button alert" ng-click="game.goBack();saved=false;" ng-disabled="game.data.plays.length === 0"><i class="fa fa-undo"></i>&nbsp;{{ 'UNDO' | translate  }}</a></li>
+            </ul>
+        </div>
         
-        <a class="button half-wide" ng-hide="saved" ng-click="save()"><i class="fa fa-save"></i>&nbsp;{{ 'SAVE' | translate }}</a>
-        <a class="button secondary disabled half-wide" ng-show="saved"><i class="fa fa-save"></i>&nbsp;{{ 'SAVED' | translate }}</a>
-        
-        <a class="button alert half-wide" ng-hide="game.data.board.data.end" ng-click="game.data.board.endGame()"><i class="fa fa-lock"></i>&nbsp;{{ 'END_GAME' | translate }}</a>
-        <a class="button success half-wide" ng-show="game.data.board.data.end" ng-click="game.data.board.undoEndGame()"><i class="fa fa-unlock"></i>&nbsp;{{ 'REOPEN_GAME' | translate }}</a>
-        
+        <!-- REVEALS -->
         <div id="letterset" class="reveal-modal" data-reveal>
             <a ng-click="hideRevealTiles()" class="close-reveal-modal"><i class="fa fa-times"></i></a><br />
             <table class="wide">

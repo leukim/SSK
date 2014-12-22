@@ -79,8 +79,8 @@ function Game (language, playerNames, backup_data) {
     
     var goBack = function () {
         if (data.plays.length !== 0) {
-            data.board.goBack();
             var deleted_play = data.plays.pop();
+            if (!deleted_play.pass) data.board.goBack();
             data.currentTurn--;
             if (data.currentTurn == -1) data.currentTurn = data.playerNames.length-1;
             
@@ -110,12 +110,29 @@ function Game (language, playerNames, backup_data) {
         }
     };
     
+    var pass = function () {
+        data.plays.push({
+            rollback: false,
+            position: "",
+            wordlist: "",
+            points: 0,
+            scrabble: false,
+            playerName: data.playerNames[data.currentTurn],
+            pass: true
+            
+        });
+        
+        data.currentTurn++;
+        if (data.currentTurn >= data.playerNames.length) data.currentTurn = 0;
+    };
+    
     return {
         data: data,
         
         clickCell: clickCell,
         addWord: add_word,
         goBack: goBack,
-        clearFields: clearFields
+        clearFields: clearFields,
+        pass: pass
     };
 }

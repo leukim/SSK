@@ -49,10 +49,12 @@ services.service('Language', function ($translate) {
     };
     
     this.changeLanguage = function (code) {
-        $translate.use(code);
-        this.language.name = this.available_langs[code].name;
-        this.language.code = this.available_langs[code].code;
-        this.language.flag = this.available_langs[code].flag;
+        if (code in this.available_langs) {
+            $translate.use(code);
+            this.language.name = this.available_langs[code].name;
+            this.language.code = this.available_langs[code].code;
+            this.language.flag = this.available_langs[code].flag;
+        }
     };
     
     return this;

@@ -188,4 +188,6 @@ controllers.controller("GameCtrl", function ($scope, $routeParams, gameFactory) 
     $scope.hideRevealPlays = function () {
         $('#plays').foundation('reveal', 'close');
     };
+    
+    $("#game-screen").foundation();
 });
